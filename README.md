@@ -39,8 +39,7 @@ Aplicación en Angular que gestiona una lista de productos (celulares) usando un
 
 ### 1: Clonar el repositorio
 ```bash
-git clone <URL_DE_TU_REPO>
-cd <CARPETA_DEL_PROYECTO> 
+git clone <https://github.com/DanielFernandez14/Tp-2-Angular-UTN> 
 ```
 
 ### 2) Instalar dependencias
