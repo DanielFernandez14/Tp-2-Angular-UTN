@@ -1,59 +1,55 @@
-# Tp2Angular
+# TP 2 — Angular UTN
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+Aplicación en Angular que gestiona una lista de productos (celulares) usando un **servicio** con datos simulados (array local), aplicando **pipes estándar** (`currency`, `date`) y un **pipe personalizado** (`descuento`) para calcular el precio final con descuento. Incluye búsqueda, formulario de alta y eliminación con confirmación.
 
-## Development server
+> **Autor:** Daniel Matías Fernández
 
-To start a local development server, run:
+---
 
+## Funcionalidades principales
+
+- **Servicio `ProductoService`**
+  - `getProductos()` → retorna la lista como `Observable<Producto[]>`.
+  - `addProduct(...)` → agrega un producto **al inicio** de la lista.
+  - `deleteProducto(id)` → elimina un producto por ID.
+  - `reset()` → restablece la lista inicial.
+- **Componente `ListaProductos`**
+  - Inyección del servicio y carga inicial con `ngOnInit`.
+  - Estado de carga (`loading`).
+  - Buscador por nombre/descripcion (normalizado: minúsculas + sin tildes).
+  - Formulario para agregar un producto nuevo.
+  - Confirmación nativa (`window.confirm`) al eliminar y al limpiar lista.
+- **Pipes**
+  - `currency:'ARS'` para precios.
+  - `date:'dd/MM/yyyy'` para fecha de alta.
+  - Pipe personalizado `descuento` para precio final con porcentaje configurable.
+
+---
+
+## Tecnologías
+
+- Angular (standalone components)
+- TypeScript
+- RxJS (`BehaviorSubject`, `Observable`)
+- HTML + CSS
+
+---
+
+##  Instalación y ejecución
+
+### 1: Clonar el repositorio
 ```bash
+git clone <URL_DE_TU_REPO>
+cd <CARPETA_DEL_PROYECTO> 
+```
+
+### 2) Instalar dependencias
+```
+npm install
+```
+
+
+### 3) Levantar en desarrollo
+```
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
