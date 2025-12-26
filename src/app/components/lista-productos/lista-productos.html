@@ -1,16 +1,67 @@
-<div>
-    <h2>Lista de Productos</h2>
-    <button (click)="simularAgregarProducto()">Simular Agregar</button>
-    <button (click)="limpiar()">Limpiar Lista de Productos</button>
-    <ul *ngIf= "!loading && products.length > 0">
-        <li *ngFor="let product of products">
+<div class="wrapper">
+    <h2 class="title">Lista de Celulares</h2>
 
-            <div>
-                <h3>{{product.nombre}}</h3>
-                <span>$ {{product.precio}}</span>
-                <span>Precio con descuento ${{porcentaje_descuento}} % off {{(product.precio | descuento: porcentaje_descuento)}}</span>
-                <button (click)="eliminar (product.id)">Eliminar</button>
-            </div>
+    <div class="actions">
+        <button (click)="toggleForm()">Agregar Celular</button>
+        <button (click)="limpiar()">Limpiar Lista de Celulares</button>
+    </div>
+
+    <div class="form" *ngIf="showForm">
+        <h3 class="form-title">Nuevo celular</h3>
+
+        <div class="form-row">
+            <label>Nombre</label>
+            <input type="text" [(ngModel)]="formNombre" placeholder="Ej: Samsung Galaxy A54" />
+        </div>
+
+        <div class="form-row">
+            <label>Descripción</label>
+            <input type="text" [(ngModel)]="formDescripcion" placeholder="Ej: 8GB RAM, 128GB, AMOLED" />
+        </div>
+
+        <div class="form-row">
+            <label>Precio</label>
+            <input type="number" [(ngModel)]="formPrecio" placeholder="Ej: 300" />
+        </div>
+
+        <div class="form-actions">
+            <button (click)="agregarDesdeForm()">Guardar</button>
+            <button (click)="toggleForm()">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="search" *ngIf="!loading">
+        <input #buscador type="text" placeholder="Buscar por nombre o descripción..." (input)="onSearch(buscador.value)" />
+        <small class="search-info">
+            Mostrando {{filteredProducts.length}} de {{products.length}}
+        </small>
+    </div>
+
+    <p *ngIf="!loading">Total productos: {{products.length}}</p>
+    <ul *ngIf="!loading && filteredProducts.length > 0" class="list">
+        <li *ngFor="let product of filteredProducts" class="item">
+            <h3 class="name">{{product.nombre}}</h3>
+
+            <img class="product-img" [src]="product.imagenUrl || imagenGenerica" [alt]="product.nombre" loading="lazy" />
+
+            <p *ngIf="product.descripcion" class="line">
+                <strong>Descripción:</strong> {{product.descripcion}}</p>
+            <p class="line">
+                <strong>Fecha de alta:</strong> {{product.fechaAlta | date:'dd/MM/yyyy'}}</p>
+            <p class="line">
+                <strong>Precio original:</strong> {{product.precio | currency:'ARS'}}</p>
+            <p class="line">
+                <strong>Precio con descuento</strong> ({{porcentaje_descuento}}%):
+                {{(product.precio | descuento: porcentaje_descuento) | currency:'ARS'}}</p>
+            <button class="btn-delete" (click)="eliminar(product.id)">Eliminar</button>
         </li>
     </ul>
+
+    <p *ngIf="!loading && products.length === 0" class="empty">
+        No hay productos disponibles.
+    </p>
+
+    <p *ngIf="!loading && products.length > 0 && filteredProducts.length === 0" class="empty">
+        No hay resultados para la búsqueda.
+    </p>
 </div>
